@@ -2,7 +2,7 @@
 
 被某人安利了一把这种暴露年龄的游戏，遂体验之。
 
-由于大陆官方暂不支持 mac 版本，于是辗转前往[台湾官网](https://tw.battle.net/account/download/index.xml?show=bnetapp)下载。但是下载下来的版本却是只支持大陆账号登陆。
+由于大陆官方暂不支持 mac 版本，于是辗转前往[台湾官网][1]下载。但是下载下来的版本却是只支持大陆账号登陆。
 
 之前没有体验过这种即时战略游戏，跟着试玩体验了一下。感觉是需要熟悉各个角色功能、各种数值消耗以及功能快捷键的。暂时还没有接触到可以称之为“战略”的部分。
 
@@ -10,3 +10,4 @@
 
 `1497 days left`
 
+[1]:	https://tw.battle.net/account/download/index.xml?show=bnetapp
