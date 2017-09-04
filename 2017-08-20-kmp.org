@@ -1,0 +1,45 @@
+* KMP
+** 写一个 isContain(a, b) 来判断字符串 a 是否包含字符串 b
+** 思路是你可以选择一个个字符比较过去，可优化的空间在于你可以利用比较过的字符信息，这就是 KMP 算法了。
+
+#+BEGIN_SRC javascript
+function cal (s) {
+    var length = s.length;
+
+    if (length <= 1) return 0;
+
+    for (let i = length - 1; i > 0; i--) {
+        if (s.substr(0, i) === s.substr(length - i, i)) {
+            return i;
+        }
+    }
+
+    return 0;
+}
+
+function genTable (s) {
+    return Array.from(s).map((_, i) => {
+        let subS = s.substr(0, i + 1);
+        return cal(subS);
+    });
+}
+
+function isContain (a, b) {
+    let la = a.length, lb = b.length;
+
+    var table = genTable(b);
+
+    if (la < lb || la < 1 || lb < 1) return false;
+
+    for (let i = 0; i + lb <= la;) {
+        for (let j = 0; j < lb; j++) {
+            if (a[i+j] != b[j]) {
+                i += (j >= 1 ? (j - table[j - 1]) : 1);
+                break;
+            }
+            if (j === lb - 1) return true;
+        }
+    }
+    return false;
+}
+#+END_SRC
