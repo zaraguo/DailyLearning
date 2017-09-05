@@ -1,0 +1,34 @@
+#+TITLE: Lua Reminder
+
+* 流程控制
+** 注释 `--`
+** 不等于 `~=`
+** 与 `and`
+** 或者 `or`
+** 非 `not`
+
+  #+BEGIN_SRC lua
+  if condition then statment elseif condition then statment end
+  while condition do statment end
+  for i = head, tail, step do statment end
+  repeat statment until condition
+  #+END_SRC
+
+  #+BEGIN_SRC lua
+  function LoudDog:new()
+    newObj = {}
+    -- set up newObj
+    self.__index = self
+    return setmetatable(newObj, self)
+  end
+  #+END_SRC
+
+* tables
+** Class-like tables and inheritance
+   - self.__index = self
+** setmetatable
+   - __index 的重载可以接受函数或者 table
+   - 返回值为第一个参数
+
+* 参考
+  [[http://tylerneylon.com/a/learn-lua/][learn Lua in 15 mins]]
