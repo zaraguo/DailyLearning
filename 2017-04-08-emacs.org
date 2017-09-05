@@ -1,0 +1,50 @@
+#+TITLE: Emacs
+
+* Common cmd
+** *SPC SPC* 进入 emacs command
+** project 相关
+*** *SPC p f* 当前项目下文件查找
+*** *SPC p s* 当前项目下字符串查找
+*** *SPC p p* 项目查找
+*** *SPC p d* 当前项目下文件夹查找
+** *SPC b b* 打开 buffer list
+** *,* 展开当前 mode 下的命令列表，等价于 *SPC m*
+** *SPC ?* 查看命令对应的快捷键
+** layouts 相关 *SPC l*
+
+* org-mode
+** *M* 为 Alt 键
+** 插入同级别列表 *M-RET* *, h i* 
+** 开启和关闭番茄时钟 *, p*
+** 代码段
+*** 输入 <s 再按 Tab 自动展开为一段代码段
+*** *C-c '* 根据代码段指定的语言打开新窗口进行编辑
+** find/replace
+*** Evil Search
+**** 光标在单词上时按 * 进行查找
+**** 按 *e* 可以进行编辑修改
+**** 按 *S* 开始输入替换的单词
+*** Helm-swoop
+**** 光标在单词上时按 *SPC s S/s* 进行查找
+**** 按 *C-c C-e* 可以进入编辑模式
+*** Occur
+**** *M-s o* 输入搜索词，将会打开一个新窗口列出所有的搜索词
+**** 按 *e* 进入编辑模式
+**** 完成 *C-c* 退出
+*** Helm-ag
+**** 目录下搜索
+***** *SPC s p* 进行搜索
+***** Tab 进行快速预览
+***** ENT 进入当前文件
+***** *SPC s l* 上一次的搜索
+**** *SPC s f* 指定文件/文件夹搜索
+**** *SPC u SPC s f* 指定文件夹和文件格式的搜索
+***** *C-c C-e* 进入编辑模式，*C-c C-c* 完成退出
+**** 在某个 function 内按 *SPC n f* 将试图锁定当前 function，方便进行替换修改
+***** *SPC n w* 完成退出
+** org agenda *, a*
+** org capture *, c*
+** table
+*** *C-c |* 可以插入表格，或者将 csv 转换为表格
+
+
