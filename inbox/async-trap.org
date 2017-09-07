@@ -1,0 +1,67 @@
+#+TITLE: Node.js Async 库中 forEachLimit 的坑（误用）
+
+* 起因
+  #+BEGIN_SRC javascript
+  const async = require('async');
+
+  async.forEachLimit(Array(3000), 1, (item, done) => {
+      done();
+  }, err => {
+      console.log(err || 'Done');
+  });
+
+  //RangeError: Maximum call stack size exceeded
+  #+END_SRC
+
+* 源码
+  #+BEGIN_SRC javascript
+    function _eachOfLimit(limit) {
+        return function (obj, iteratee, callback) {
+            callback = once(callback || noop);
+            if (limit <= 0 || !obj) {
+                return callback(null);
+            }
+            var nextElem = iterator(obj);
+            var done = false;
+            var running = 0;
+
+            function iterateeCallback(err, value) {
+                running -= 1;
+                if (err) {
+                    done = true;
+                    callback(err);
+                }
+                else if (value === breakLoop || (done && running <= 0)) {
+                    done = true;
+                    return callback(null);
+                }
+                else {
+                    replenish();
+                }
+            }
+
+            function replenish () {
+                while (running < limit && !done) {
+                    var elem = nextElem();
+                    if (elem === null) {
+                        done = true;
+                        if (running <= 0) {
+                            callback(null);
+                        }
+                        return;
+                    }
+                    running += 1;
+                    iteratee(elem.value, elem.key, onlyOnce(iterateeCallback));
+                }
+            }
+
+            replenish();
+        };
+    }
+  #+END_SRC
+
+* 分析
+  当 eachLimit 中的 iteratee 中全是同步执行的代码的时候，就形成了一个 replenish 的多层嵌套递归调用，因为全部都是同步代码所以这些代码全部被压入了当前的执行栈中，嵌套层数即 obj 的长度，造成了 *Maximum call stack size exceeded*
+
+* 参考
+  [[https://github.com/caolan/async/blob/d5c391a3d764d3a7c2afdc4d7ae111e85312cfc4/dist/async.js#L910][async]]
