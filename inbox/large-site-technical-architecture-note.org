@@ -1,0 +1,19 @@
+#+TITLE: 大型网站技术架构笔记
+
+* [[https://my.mindnode.com/QFMqL23k1jrzE2AG9dHDhFuvFoUphpLqHgh9P3q7][mindnode]]
+* 贫血模型::行为和状态分离到不同对象中
+* 充血模型::面向对象设计本质，一个对象包含行为和状态
+* 线程安全
+** 线程安全的几种手段 [[https://en.wikipedia.org/wiki/Thread_safety][wiki]]
+- 避免状态共享
+  - 可重入、无状态
+  - 线程局部对象
+  - 不可变对象
+- 同步
+  - 锁
+  - 原子操作
+* RabbitMQ vs Kafka
+** RabbitMQ 用于生产者消费者速度差不多的情况下，提供可靠，保序的消息传输
+** Kafka 的优势在于更大的吞吐量，所以在消费者速度更不上生产者的时候更适合，需要自己管理 offset
+* 参考
+** [[https://www.quora.com/What-are-the-differences-between-Apache-Kafka-and-RabbitMQ][消息队列]] 
