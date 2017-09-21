@@ -1,0 +1,35 @@
+* 关于 node 错误处理
+** try...catch 只会捕获当前事件循环里的异常  
+#+BEGIN_SRC javascript
+  //error code
+  try {
+      run(() => {
+          throw new Error();
+      });
+  } catch (e) {
+      console.log(e);
+  }
+#+END_SRC
+** 对于一个给定的函数，如果其中的一个异常是异步传递的，那么所有的异常都需要是异步传递的
+** 你即可以同步传递错误（抛出），也可以异步传递错误（通过传给一个回调函数或者触发EventEmitter的 error事件），但是不用同时使用 
+** Node 错误对象属性名约定
+| Property name  | Intended use                                                                                                                                                             |
+|----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| localHostname  | the local DNS hostname (e.g., that you're accepting connections at)                                                                                                      |
+| localIp        | the local IP address (e.g., that you're accepting connections at)                                                                                                        |
+| localPort      | the local TCP port (e.g., that you're accepting connections at)                                                                                                          |
+| remoteHostname | the DNS hostname of some other service (e.g., that you tried to connect to)                                                                                              |
+| remoteIp       | the IP address of some other service (e.g., that you tried to connect to)                                                                                                |
+| remotePort     | the port of some other service (e.g., that you tried to connect to)                                                                                                      |
+| path           | the name of a file, directory, or Unix Domain Socket (e.g., that you tried to open)                                                                                      |
+| srcpath        | the name of a path used as a source (e.g., for a rename or copy)                                                                                                         |
+| dstpath        | the name of a path used as a destination (e.g., for a rename or copy)                                                                                                    |
+| hostname       | a DNS hostname (e.g., that you tried to resolve)                                                                                                                         |
+| ip             | an IP address (e.g., that you tried to reverse-resolve)                                                                                                                  |
+| propertyName   | an object property name, or an argument name (e.g., for a validation error)                                                                                              |
+| propertyValue  | an object property value (e.g., for a validation error)                                                                                                                  |
+| syscall        | the name of a system call that failed                                                                                                                                    |
+| errno          | the symbolic value of errno (e.g., "ENOENT"). Do not use this for errors that don't actually set the C value of errno.Use "name" to distinguish between types of errors. |
+
+* 参考
+** [[https://www.joyent.com/node-js/production/design/errors][node-error-design]] 

@@ -1,0 +1,52 @@
+#+TITLE: clojure
+
+#+BEGIN_SRC clojure
+
+  ; List
+
+  (def p-list '("Andy" "Mike" "Joe"))
+  (def b-list '("Sarah" "Kitty"))
+
+  (def students (into p-list b-list)) ; => ("Kitty" "Sarah" "Andy" "Mike" "Joe")
+
+  (conj p-list "Zara") ; => ("zara" "andy" "mike" "joe")
+  (cons "Zara" p-list) ; => ("zara" "andy" "mike" "joe")
+
+
+  ; Vector
+  (def numbers [1 2 3 4 5])
+
+  (defn add-two [num]
+    (+ 2 num))
+
+  (map add-two numbers)
+
+  (map #(+ % 100) numbers)
+
+  (defn make-adder[n]
+    (fn [x]
+      (+ x n)))
+
+
+  ; Map
+
+  (def p-map {:red :cherry, :green :apple})
+
+  (get p-map :red)
+  (p-map :red)
+  (:red p-map)
+
+  (contains? p-map :red)
+  (keys p-map) ; => (:red :green)
+  (vals p-map) ; => (:cherry :apple)
+
+  ; Set
+
+  (def students #{"Andy" "Joe" "Kitty"})
+
+  (students "Andy") ; => true
+  (students "Mike") ; => nil
+
+  (contains? student "Mike") ; => false
+
+#+END_SRC

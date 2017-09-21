@@ -1,0 +1,24 @@
+#+TITLE: V8 中的对象优化
+
+* 隐藏类
+** js 的对象需要具有可变属性的特点，利用 hash 读写效率不高，如果能直接根据属性获取其值的 offset 就好了
+** 对象运行时将和一个隐藏类关联，隐藏类中记录了每个属性的 offset，属性布局改变将创建新的隐藏类
+** 每个隐藏类是属性描述符的集合，每个描述符要么是一个真正的属性，要么是一个过渡（指向拥有该属性的隐藏类）
+** 过渡的存在是为了让对象之间尽可能地共用隐藏类
+** 带有相同属性（连属性声明的顺序也要相同）的对象其实共用一个隐藏类，该类指明了各个属性的 offset
+** 对象属性值以数组形式保存，根据隐藏类中记录的每个属性的 offset 信息取数组中获取属性值
+
+* 内联缓存
+** 为了快速获取对象属性
+** 通过简单对比缓存过的隐藏类来检查某个对象的属性布局的假设，一次来加速对象属性值的获取
+** 对象的属性调用将产生其对应隐藏类中该属性 offset 的缓存，后续该缓存属性的调用将不用去隐藏类中查找属性对应的 offset 而是直接读取缓存的 offset
+
+* 标记值
+** V8 用 32 位表示对象和数字。它用一位来判断是对象（flag = 1）还是整数（flag = 0）
+** 鉴于 1 位为标记位，剩余的数字只占 31 位，被称为 SMI（SMall Integer）
+** 当数值大于 31 位，v8 将对其进行装箱，转换为 double，并创建一个新的对象存放该数字
+
+* 参考
+** [[https://github.com/v8/v8/wiki/Design%2520Elements][v8-design-elements]]
+** [[http://mrale.ph/blog/2012/06/03/explaining-js-vms-in-js-inline-caches.html][Explaining JavaScript VMs in JavaScript - Inline Caches]]
+** [[https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e][How JavaScript works: inside the V8 engine + 5 tips on how to write optimized code]]

@@ -1,0 +1,5 @@
+* tern 
+** tern binary not found
+*** ln -s [your tern] /usr/local/bin tern
+** 在项目中生成 tags
+*** find . -type f -iname "*.[ch]" | etags -

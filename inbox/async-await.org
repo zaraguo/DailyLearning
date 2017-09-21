@@ -1,0 +1,18 @@
+* TODO
+
+* 参考
+** [[https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9][async-await]]
+
+* daily
+
+又掌握了 screen 的一些好用用法
+
+给出窗口列表 `Ctrl-a "`
+上一个窗口 `Ctrl-a space`
+下一个窗口 `Ctrl-a backspace`
+重命名窗口 `Ctrl-a A`
+关闭当前窗口 `Ctrl-a k`
+
+try google keep
+
+moon - preact - react

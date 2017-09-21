@@ -1,0 +1,10 @@
+* vim 中的回车
+** vim 中你可以用 \r 表示回车代替其他字符，但是如果你要查找一个回车，需要使用 \n 来表示。
+** Reference
+*** [[https://stackoverflow.com/questions/71323/how-to-replace-a-character-by-a-newline-in-vim][vim 中如何用换行来替代一个字符]]
+* paste 命令可以按行合并文件输出
+* fs 的“坑”
+** fs.open 存在不同系统下的差异
+*** flag a+ 在 Linux/macOS 下打开一个文件夹将返回错误，Windows/FreeBSD 下会返回文件描述符
+** flag w 打开已经存在的文件时，文件内容将被清空
+** linux 下 flag a 打开文件进行 write 时 position 0 也只能从尾部追加，macos 下则是文件头位置写入

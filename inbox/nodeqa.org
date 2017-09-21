@@ -1,0 +1,119 @@
+* 深拷贝浅拷贝
+** 浅拷贝就是赋值，两者共同操作同一片内存
+** array 的 slice concat 并不算深拷贝，其中的对象元素是指拷贝了引用
+** 深拷贝
+*** JSON.parse(JSON.stringify(obj))
+**** 可能有循环引用的问题
+**** 正则表达式、函数类型不能进行深拷贝
+*** for...in... 遍历，递归
+* map 的一些基础知识
+** [undefined, undefined].map(i=>1); // output: [1, 1]
+** [1, 1].map(i=>{1}) ......equal to ...... [1, 1].map(i=>{1; return;}) // output: [undefined, undefined]
+* 循环遍历
+** for...in
+*** 不保序
+*** 效率低
+*** 遍历对象的可枚举属性，包括从原型链继承的属性（可用 hasOwnProperty 过滤）
+** for...of
+*** 需要有 Symbol.iterator 接口的实现
+*** 支持字符串遍历
+*** 正确响应 break continue return
+** forEach
+*** 新增到数组的元素不会被遍历到
+*** 已存在的值被修改，则传入 callback 的值是 forEach 遍历到它时的值
+*** 不支持 break return
+*** 内部的 async await 函数不会进行预期顺序的调用
+** for (;;)
+* 事件
+* GC
+** 引用计数，如果引用数为 0，则释放内存 (V8 貌似不是单纯的这个）
+*** var a = [1, 2, 3]; a 引用了 [1, 2, 3] 这个对象，引用数为 1。 a = null; 引用数为 0，则释放 [1, 2, 3] 对象
+** v8 垃圾回收机制
+*** process.memoryUsage()
+*** WeakSet WeakMap
+**** 键必须是对象
+**** WeakMap WeakSet 对于键的引用是弱引用，不计入垃圾回收机制。（对于值的引用是强引用）
+**** 当 WeakMap 的键对象在外部被释放了，那么这个键值对也会自动消失。
+*** node --expose-gc 允许手动执行垃圾回收机制
+*** 引用类型是在没有引用之后, 通过 v8 的 GC 自动回收, 值类型如果是处于闭包的情况下, 要等闭包没有引用才会被 GC 回收, 非闭包的情况下等待 v8 的新生代 (new space) 切换的时候回收。
+**** new space还是用copying GC
+**** global GC则默认用incremental marking + lazy sweeping为主，mark-compact为备份
+* 箭头函数 this
+#+BEGIN_SRC javascript
+  function foo() {
+      return () => {
+          return () => {
+              return () => {
+                  console.log("id:", this.id);
+              };
+          };
+      };
+  }
+
+  var f = foo.call({id: 1});
+
+  var t1 = f.call({id: 2})()();
+  var t2 = f().call({id: 3})();
+  var t3 = f()().call({id: 4});
+
+  // output: id:1 id:1 id:1
+#+END_SRC
+** 箭头函数的 this 为定义时所在的对象
+** foo运行时所在的对象，恰好是箭头函数定义时所在的对象 
+* null & undefined
+** undefiend 表示缺少值，即该处的值还未被定义
+** null 表示一个值被定义了，被定义为空值
+** 你可以声明一个变量但是不赋值，但是你不能使用一个未声明的变量，那样会报 not defined error
+#+BEGIN_SRC javascript
+  typeof null // object
+  typeof undefined // "undefined"
+
+  null + '0' // 0
+  undefined - 0 // NaN
+#+END_SRC
+* string & int 
+#+BEGIN_SRC javascript
+  "111" - 0 // 111
+  "111" + 0 // 1110
+  "12" * "2" // 24
+#+END_SRC
+* 变量的声明
+** 多次 var 声明同一个变量合法
+** 不声明直接赋值，JS 将对其隐式声明，并创建为全局变量
+** 用 var 声明的变量为永久变量，不可用 delete 删除
+** 函数内部用 var 声明的变量作用于为函数内部，而不存在块级之说，并且函数内部定义的变量将在函数内隐藏全局的同名变量
+*** 函数内变量： 形参 -> 函数声明（覆盖同名形参）-> 变量申明
+#+BEGIN_SRC javascript
+
+  var scope = 'global';
+
+  function f () {
+      console.log(scope);
+      if (true) {
+          var scope = 'local';
+      }
+      console.log(scope);
+  }
+
+  f();
+
+  //output: undefined local
+#+END_SRC
+** 赋值
+#+BEGIN_SRC javascript
+  var foo = {n: 1};
+  var bar = foo;
+  foo.x = foo = {n: 2};
+  console.log(bar.x === foo);
+  // true
+#+END_SRC
+* event loop
+
+
+section II
+
+* promise generator
+* os 
+* network
+* test
+* koa

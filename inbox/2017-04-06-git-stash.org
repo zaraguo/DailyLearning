@@ -1,0 +1,14 @@
+#+TITLE: Git Stash
+
+* 前言
+  因为不小心进行了 stash clear 从而把自己的代码搞丢了。去网上找到了解决方案。
+  #+BEGIN_SRC bash
+    git log --graph --oneline --decorate $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )
+  #+END_SRC
+  然后根据得到的 stash 栈缓存记录，找到对应的 stash-key， 进行 git stash apply <stash>
+
+* 分析
+  趁机了解下上面的 git 语句都做了什么
+
+* 参考
+  

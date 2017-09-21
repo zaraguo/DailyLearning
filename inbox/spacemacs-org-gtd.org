@@ -1,0 +1,17 @@
+#+TITLE: Org-mode GTD
+
+* Org-mode GTD
+** todo item
+** capture
+** refile
+** archive
+   org-archive-subtree-default
+** agenda
+** pomodoro
+** review
+
+* 参考
+- [[http://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html][Custom Agenda Commands]]
+- [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Orgmode for GTD]]
+- [[http://orgmode.org/manual/][The Org Manual]]
+ 
