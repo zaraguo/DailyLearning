@@ -1,0 +1,30 @@
+#+TITLE: 一个 node SDK 的自我修养
+
+* 代码风格相关
+** 缩进，变量名，函数名命名规范等
+*** 一些好的 js 代码风格可参考 google、airbnb。一些细节内部统一好就可以了
+** 命名一致（相同意义的变量拥有不同的变量名）
+*** 不一致的参数命名十分误导使用者（如果你开发的是一个 SDK 的话），甚至开发人员
+** 行尾空格等一系列不影响运行结果，但是会造成多人维护代码冲突的问题也值得关注
+
+* 测试用例
+** 可测试性
+*** 一个可以跑通的测试用例是基础
+*** 测试用例的同样需要相应的文档
+
+* 文档
+** changelog
+** commit message
+
+* 异常捕获
+** 在可能产生异常的代码段外进行异常捕获，没有捕获的异常将直接抛出给调用者，这是十分可怕的
+*** JSON.parse、require('x.json') 等
+** [[https://www.joyent.com/node-js/production/design/errors][node error design]]
+
+* [[https://docs.npmjs.com/misc/developers][npmignore]
+
+* FEATURE
+** 模块化
+*** 避免当调用其中的一个小功能时，却加载了所有的功能
+** promise
+** 依赖精简化，并指定版本（可利用 [[https://docs.npmjs.com/files/package-lock.json][package-lock.json]]）
